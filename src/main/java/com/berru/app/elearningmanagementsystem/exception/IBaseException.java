@@ -34,5 +34,4 @@ public interface IBaseException {
         }
         return toString;
     }
-
 }

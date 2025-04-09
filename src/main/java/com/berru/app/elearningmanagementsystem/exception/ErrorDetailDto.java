@@ -36,5 +36,4 @@ public class ErrorDetailDto implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }
