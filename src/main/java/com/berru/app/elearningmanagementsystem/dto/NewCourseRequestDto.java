@@ -1,14 +1,12 @@
 package com.berru.app.elearningmanagementsystem.dto;
 
 import com.berru.app.elearningmanagementsystem.entity.Category;
-import com.berru.app.elearningmanagementsystem.entity.Course;
 import com.berru.app.elearningmanagementsystem.entity.CourseSection;
 import com.berru.app.elearningmanagementsystem.entity.User;
 import com.berru.app.elearningmanagementsystem.enums.CourseStatus;
 import com.berru.app.elearningmanagementsystem.enums.CourseTypeStatus;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -65,10 +63,4 @@ public class NewCourseRequestDto {
 
     @NotNull(message = "Course type must be provided")
     private CourseTypeStatus type;
-
-    public static Course toEntity(NewCourseRequestDto dto) {
-        Course course = new Course();
-        BeanUtils.copyProperties(dto, course, "mentorId", "categoryId", "notesFileName", "thumbnail");
-        return course;
-    }
 }
