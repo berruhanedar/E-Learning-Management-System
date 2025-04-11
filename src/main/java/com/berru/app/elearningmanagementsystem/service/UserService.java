@@ -9,15 +9,15 @@ public interface UserService {
 
     User updateUser(User user);
 
-    User getUserByEmailAndStatus(String emailId, String status);
+    User getUserByEmailAndStatus(String email, String status);
 
-    User getUserByEmailid(String emailId);
+    User getUserByEmail(String email);
 
     List<User> getUserByRole(String role);
 
     User getUserById(int userId);
 
-    User getUserByEmailIdAndRoleAndStatus(String emailId, String role, String status);
+    User getUserByEmailAndRoleAndStatus(String email, String role, String status);
 
     List<User> updateAllUser(List<User> users);
 
