@@ -13,10 +13,5 @@ public interface CourseMapper {
 
     CourseResponseDto toCourseDTO(Course course);
 
-    @Mapping(source = "categoryId", target = "category.id")
-    @Mapping(source = "mentorId", target = "mentor.id")
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "type", target = "type")
     Course toCourse(NewCourseRequestDto newCourseRequestDto);
-
- }
+}
