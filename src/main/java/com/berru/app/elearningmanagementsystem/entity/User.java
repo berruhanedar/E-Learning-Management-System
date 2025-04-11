@@ -42,4 +42,6 @@ public class User {
     private MentorDetail mentorDetail;
 
     private String role;
+
+    private String status;
 }

@@ -14,7 +14,7 @@ public interface BookingService {
 
     Booking getById(int bookingId);
 
-    Booking findByBookingId(String bookingId);
+    Booking findByReferenceCode(String referenceCode);
 
     List<Booking> getBookingByCustomer(User customer);
 
