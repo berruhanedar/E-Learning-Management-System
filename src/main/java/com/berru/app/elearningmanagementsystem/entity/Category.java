@@ -1,6 +1,5 @@
 package com.berru.app.elearningmanagementsystem.entity;
 
-import com.berru.app.elearningmanagementsystem.enums.CategoryStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,5 +22,5 @@ public class Category {
 
     private String description;
 
-    private CategoryStatus status;
+    private String status;
 }

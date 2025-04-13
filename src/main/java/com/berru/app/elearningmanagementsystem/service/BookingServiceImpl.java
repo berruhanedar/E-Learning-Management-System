@@ -4,10 +4,12 @@ import com.berru.app.elearningmanagementsystem.entity.Booking;
 import com.berru.app.elearningmanagementsystem.entity.Course;
 import com.berru.app.elearningmanagementsystem.entity.User;
 import com.berru.app.elearningmanagementsystem.repository.BookingRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class BookingServiceImpl implements BookingService {
     private BookingRepository bookingRepository;
 
@@ -33,8 +35,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findByReferenceCode(String bookingId) {
-        return this.bookingRepository.findByReferenceCode(bookingId);
+    public Booking findByBookingId(String bookingId) {
+        return this.bookingRepository.findByBookingId(bookingId);
     }
 
     @Override
@@ -61,5 +63,4 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> getByCourseAndCustomer(Course course, User customer) {
         return bookingRepository.findByCourseAndCustomer(course, customer);
     }
-
 }
