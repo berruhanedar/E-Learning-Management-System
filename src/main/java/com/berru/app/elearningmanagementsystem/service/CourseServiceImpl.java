@@ -36,6 +36,7 @@ public class CourseServiceImpl implements CourseService {
         } else {
             return null;
         }
+
     }
 
     @Override
@@ -77,5 +78,4 @@ public class CourseServiceImpl implements CourseService {
     public Long getCountByMentorAndStatus(User mentor, String status) {
         return courseRepository.countByMentorAndStatus(mentor, status);
     }
-
 }

@@ -8,4 +8,5 @@ public interface MentorDetailService {
     MentorDetail updateMentorDetail(MentorDetail detail);
 
     MentorDetail getById(int detailId);
+
 }

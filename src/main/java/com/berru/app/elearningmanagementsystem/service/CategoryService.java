@@ -4,6 +4,7 @@ import com.berru.app.elearningmanagementsystem.entity.Category;
 
 import java.util.List;
 
+
 public interface CategoryService {
 
     Category addCategory(Category category);
@@ -13,4 +14,5 @@ public interface CategoryService {
     Category getCategoryById(int category);
 
     List<Category> getCategoriesByStatusIn(List<String> status);
+
 }

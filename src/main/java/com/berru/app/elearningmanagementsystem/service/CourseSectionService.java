@@ -11,4 +11,5 @@ public interface CourseSectionService {
     CourseSection getById(int section);
 
     List<CourseSection> getByCourse(Course course);
+
 }

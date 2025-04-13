@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
@@ -25,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryById(int categoryId) {
+
         Optional<Category> optionalCategory = this.categoryRepository.findById(categoryId);
 
         if (optionalCategory.isPresent()) {

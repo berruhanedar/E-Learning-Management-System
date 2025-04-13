@@ -8,15 +8,16 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    User findByEmail(String email);  // 'emailId' yerine 'email' kullanılmalı
 
-    User findByEmailAndStatus(String email, String status);  // 'emailId' yerine 'email' kullanılmalı
+    User findByEmailId(String email);
+
+    User findByEmailIdAndStatus(String email, String status);
 
     User findByRoleAndStatusIn(String role, List<String> status);
 
     List<User> findByRole(String role);
 
-    User findByEmailAndRoleAndStatus(String email, String role, String status);  // 'emailId' yerine 'email' kullanılmalı
+    User findByEmailIdAndRoleAndStatus(String emailId, String role, String status);
 
     List<User> findByRoleAndStatus(String role, String status);
 }

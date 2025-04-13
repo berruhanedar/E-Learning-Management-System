@@ -8,24 +8,23 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class CourseSectionTopic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String title;
+    private String srNo;
+
+    private String name;
 
     private String description;
 
-    private String orderNumber;
-
-    private String videoFile;
+    private String videoFileName;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "section_id")
     private CourseSection courseSection;
+
 }

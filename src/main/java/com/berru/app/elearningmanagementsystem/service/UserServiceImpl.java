@@ -26,13 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmailAndStatus(String email, String status) {
-        return UserRepository.findByEmailAndStatus(email, status);
+    public User getUserByEmailAndStatus(String emailId, String status) {
+        return UserRepository.findByEmailIdAndStatus(emailId, status);
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return UserRepository.findByEmail(email);
+    public User getUserByEmailid(String emailId) {
+        return UserRepository.findByEmailId(emailId);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmailAndRoleAndStatus(String email, String role, String status) {
-        return this.UserRepository.findByEmailAndRoleAndStatus(email, role, status);
+    public User getUserByEmailIdAndRoleAndStatus(String emailId, String role, String status) {
+        return this.UserRepository.findByEmailIdAndRoleAndStatus(emailId, role, status);
     }
 
     @Override
@@ -67,5 +67,4 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserByRoleAndStatus(String role, String status) {
         return this.UserRepository.findByRoleAndStatus(role, status);
     }
-
 }

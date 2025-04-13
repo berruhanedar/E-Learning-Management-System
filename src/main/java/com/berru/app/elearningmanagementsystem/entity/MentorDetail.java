@@ -10,23 +10,22 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class MentorDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String bio;
+
     private int age;
+
+    private String highestQualification; // B Tech, B Pharm
+
+    private String profession;
 
     private double experience;
 
-    private String biography;
+    private String profilePic;
 
-    private String jobTitle;
-
-    private String qualification;
-
-    private String profileImageUrl;
 }

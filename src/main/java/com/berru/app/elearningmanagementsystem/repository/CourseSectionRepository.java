@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CourseSectionRepository extends JpaRepository<CourseSection, Integer> {
     List<CourseSection> findByCourse(Course course);
+
 }

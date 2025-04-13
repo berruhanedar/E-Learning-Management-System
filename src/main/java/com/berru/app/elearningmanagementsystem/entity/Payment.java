@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,22 +19,23 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private BigDecimal amount;
+    private String paymentId;
 
-    private String bookingReference;
-
-    private String cardHolderName;
-
-    private String cardNumber;
+    private String nameOnCard;
 
     private String cvv;
 
+    private String cardNo;
+
     private String expiryDate;
 
-    private String transactionId;
+    private BigDecimal amount;
+
+    private String bookingId;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private User customer;
+
 }

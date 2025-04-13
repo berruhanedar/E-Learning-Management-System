@@ -10,38 +10,35 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    private String accountStatus;
-
-    private String email;
-
     private String firstName;
 
     private String lastName;
 
+    private String emailId;
+
     @JsonIgnore
     private String password;
 
-    private String phone;
+    private String phoneNo;
 
-    private BigDecimal balance;
+    private String role;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @OneToOne
     @JoinColumn(name = "mentor_detail_id")
     private MentorDetail mentorDetail;
 
-    private String role;
+    private BigDecimal amount;
 
     private String status;
+
 }
