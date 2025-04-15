@@ -19,10 +19,9 @@ public class CustomUserDetails implements UserDetails {
     private List<GrantedAuthority> authorities;
 
     public CustomUserDetails(User user) {
-        email=user.getEmailId();
-        password=user.getPassword();
-
-        authorities = new ArrayList<>();
+        this.email = user.getEmailId();
+        this.password = user.getPassword();
+        this.authorities = new ArrayList<>();
 
         String[] roles = user.getRole().split(",");
         for (String role : roles) {
