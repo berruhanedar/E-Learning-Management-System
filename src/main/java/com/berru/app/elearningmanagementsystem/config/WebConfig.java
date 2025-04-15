@@ -1,7 +1,5 @@
 package com.berru.app.elearningmanagementsystem.config;
 
-import java.util.Arrays;
-
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,35 +10,40 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
 public class WebConfig {
 
-    private static final Long MAX_AGE = 3600L;
-    private static final int CORS_FILTER_ORDER = -102;
+    private static final long MAX_AGE_SECONDS = 3600;
+    private static final int FILTER_ORDER = -102;
+    private static final String LOCALHOST_ORIGIN = "http://localhost:8085";
 
     @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:8085");
-        config.setAllowedHeaders(Arrays.asList(
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistration() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowCredentials(true);
+        corsConfig.setAllowedOrigins(List.of(LOCALHOST_ORIGIN));
+        corsConfig.setAllowedHeaders(List.of(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT));
-        config.setAllowedMethods(Arrays.asList(
+                HttpHeaders.ACCEPT
+        ));
+        corsConfig.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
                 HttpMethod.PUT.name(),
-                HttpMethod.DELETE.name()));
-        config.setMaxAge(MAX_AGE);
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+                HttpMethod.DELETE.name()
+        ));
+        corsConfig.setMaxAge(MAX_AGE_SECONDS);
 
-        bean.setOrder(CORS_FILTER_ORDER);
-        return bean;
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        FilterRegistrationBean<CorsFilter> registrationBean = new FilterRegistrationBean<>(new CorsFilter(source));
+        registrationBean.setOrder(FILTER_ORDER);
+
+        return registrationBean;
     }
 }
