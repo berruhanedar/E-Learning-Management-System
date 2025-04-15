@@ -1,8 +1,6 @@
 package com.berru.app.elearningmanagementsystem.config;
 
-
 import com.berru.app.elearningmanagementsystem.filter.JwtAuthFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,14 +17,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class ApplicationSecurityConfig {
 
-    @Autowired
-    private JwtAuthFilter authFilter;
+    private final JwtAuthFilter jwtAuthFilter;
+
+    public ApplicationSecurityConfig(JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -34,37 +34,37 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
-
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/user/login", "/api/user/register").permitAll()
-
-                        .anyRequest().permitAll())
-
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/user/login", "/api/user/register").permitAll()
+                        .anyRequest().permitAll()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
+    public AuthenticationProvider authProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(encoder());
+        return provider;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 }
