@@ -7,13 +7,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class ApplicationConfig implements WebMvcConfigurer {
+public class WebMvcInterceptorConfig implements WebMvcConfigurer {
 
     @Autowired
     private RequestHeaderInterceptor requestHeaderInterceptor;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(requestHeaderInterceptor);
+    public void addInterceptors(InterceptorRegistry interceptorRegistry) {
+        interceptorRegistry.addInterceptor(requestHeaderInterceptor);
     }
 }
