@@ -1,9 +1,10 @@
-package com.berru.app.elearningmanagementsystem.enums;
+package com.berru.app.elearningmanagementsystem.enums.status;
 
 public enum ActiveStatus {
-    ACTIVE("Active"), DEACTIVATED("Deactivated");
+    ACTIVE("Active"),
+    DEACTIVATED("Deactivated");
 
-    private String status;
+    private final String status;
 
     private ActiveStatus(String status) {
         this.status = status;

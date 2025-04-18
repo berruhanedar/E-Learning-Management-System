@@ -11,7 +11,7 @@ import com.berru.app.elearningmanagementsystem.entity.Booking;
 import com.berru.app.elearningmanagementsystem.entity.Course;
 import com.berru.app.elearningmanagementsystem.entity.Payment;
 import com.berru.app.elearningmanagementsystem.entity.User;
-import com.berru.app.elearningmanagementsystem.enums.BookingStatus;
+import com.berru.app.elearningmanagementsystem.enums.status.BookingStatus;
 import com.berru.app.elearningmanagementsystem.service.BookingService;
 import com.berru.app.elearningmanagementsystem.service.CourseService;
 import com.berru.app.elearningmanagementsystem.service.PaymentService;

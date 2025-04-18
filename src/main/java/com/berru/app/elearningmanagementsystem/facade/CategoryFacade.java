@@ -8,7 +8,7 @@ import com.berru.app.elearningmanagementsystem.dto.CategoryResponseDto;
 import com.berru.app.elearningmanagementsystem.dto.CommonApiResponse;
 import com.berru.app.elearningmanagementsystem.entity.Category;
 import com.berru.app.elearningmanagementsystem.entity.Course;
-import com.berru.app.elearningmanagementsystem.enums.ActiveStatus;
+import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;
 import com.berru.app.elearningmanagementsystem.exception.CategorySaveFailedException;
 import com.berru.app.elearningmanagementsystem.service.CategoryService;
 import com.berru.app.elearningmanagementsystem.service.CourseService;

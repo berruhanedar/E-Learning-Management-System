@@ -1,8 +1,8 @@
 package com.berru.app.elearningmanagementsystem;
 
 import com.berru.app.elearningmanagementsystem.entity.User;
-import com.berru.app.elearningmanagementsystem.enums.ActiveStatus;
-import com.berru.app.elearningmanagementsystem.enums.UserRole;
+import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;
+import com.berru.app.elearningmanagementsystem.enums.role.UserRole;
 import com.berru.app.elearningmanagementsystem.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

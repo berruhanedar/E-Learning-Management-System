@@ -1,7 +1,7 @@
 package com.berru.app.elearningmanagementsystem.config;
 
 import com.berru.app.elearningmanagementsystem.entity.User;
-import com.berru.app.elearningmanagementsystem.enums.ActiveStatus;
+import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;
 import com.berru.app.elearningmanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

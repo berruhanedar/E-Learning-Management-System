@@ -1,13 +1,9 @@
 package com.berru.app.elearningmanagementsystem.entity;
 
-import com.berru.app.elearningmanagementsystem.enums.BookingStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Data
 @Entity

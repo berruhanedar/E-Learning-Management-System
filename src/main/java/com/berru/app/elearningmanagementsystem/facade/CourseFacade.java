@@ -9,9 +9,12 @@ import java.util.List;
 
 import com.berru.app.elearningmanagementsystem.dto.*;
 import com.berru.app.elearningmanagementsystem.entity.*;
-import com.berru.app.elearningmanagementsystem.enums.*;
+import com.berru.app.elearningmanagementsystem.enums.action.CoursePurchased;
+import com.berru.app.elearningmanagementsystem.enums.role.UserRole;
+import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;
+import com.berru.app.elearningmanagementsystem.enums.type.CourseTopicVideoShow;
+import com.berru.app.elearningmanagementsystem.enums.type.CourseType;
 import com.berru.app.elearningmanagementsystem.service.*;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

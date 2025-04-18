@@ -1,7 +1,8 @@
-package com.berru.app.elearningmanagementsystem.enums;
+package com.berru.app.elearningmanagementsystem.enums.type;
 
 public enum CourseType {
-    PAID("Paid"), FREE("Free");
+    PAID("Paid"),
+    FREE("Free");
 
     private String type;
 

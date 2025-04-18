@@ -1,7 +1,8 @@
-package com.berru.app.elearningmanagementsystem.enums;
+package com.berru.app.elearningmanagementsystem.enums.type;
 
 public enum CourseTopicVideoShow {
-    YES("Yes"), NO("No");
+    YES("Yes"),
+    NO("No");
 
     private String show;
 

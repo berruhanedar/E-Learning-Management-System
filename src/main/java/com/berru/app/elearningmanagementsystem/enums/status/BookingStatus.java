@@ -1,9 +1,10 @@
-package com.berru.app.elearningmanagementsystem.enums;
+package com.berru.app.elearningmanagementsystem.enums.status;
 
 public enum BookingStatus {
-    CONFIRMED("Confirmed"), CANCELLED("Cancelled");
+    CONFIRMED("Confirmed"),
+    CANCELLED("Cancelled");
 
-    private String status;
+    private final String status;
 
     private BookingStatus(String status) {
         this.status = status;

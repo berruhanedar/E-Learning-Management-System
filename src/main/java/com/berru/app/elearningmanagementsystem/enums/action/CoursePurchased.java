@@ -1,9 +1,10 @@
-package com.berru.app.elearningmanagementsystem.enums;
+package com.berru.app.elearningmanagementsystem.enums.action;
 
 public enum CoursePurchased {
-    YES("Yes"), NO("No");
+    YES("Yes"),
+    NO("No");
 
-    private String show;
+    private final String show;
 
     private CoursePurchased(String show) {
         this.show = show;
