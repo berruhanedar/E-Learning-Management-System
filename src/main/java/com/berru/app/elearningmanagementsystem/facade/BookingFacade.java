@@ -16,7 +16,7 @@ import com.berru.app.elearningmanagementsystem.service.BookingService;
 import com.berru.app.elearningmanagementsystem.service.CourseService;
 import com.berru.app.elearningmanagementsystem.service.PaymentService;
 import com.berru.app.elearningmanagementsystem.service.UserService;
-import com.berru.app.elearningmanagementsystem.utils.Helper;
+import com.berru.app.elearningmanagementsystem.utils.BookingIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +96,8 @@ public class BookingFacade {
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        String bookingId = Helper.generateTourBookingId();
-        String paymentBookingId = Helper.generateBookingPaymentId();
+        String bookingId = BookingIdGenerator.generateTourBookingId();
+        String paymentBookingId = BookingIdGenerator.generateBookingPaymentId();
 
         Payment payment = new Payment();
         payment.setCardNo(request.getCardNo());
