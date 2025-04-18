@@ -2,49 +2,26 @@ package com.berru.app.elearningmanagementsystem.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
-/**
- * Configuration class for Swagger setup.
- */
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+
 @Configuration
-@EnableWebMvc
-public class SwaggerConfig implements WebMvcConfigurer {
+public class SwaggerConfig {
 
-    /**
-     * Returns the Docket configuration for Swagger.
-     *
-     * @return Swagger Docket configuration
-     */
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.berru.app.elearningmanagementsystem"))
-                .paths(PathSelectors.regex("/.*"))
-                .build().apiInfo(apiInfoMetaData());
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Learning Management System Application")
+                        .description("Learning Management System Application ")
+                        .version("v0.0.1")
+                        .license(new License()
+                                .name("Apache 2.0")
+                                .url("http://springdoc.org")))
+                .externalDocs(new ExternalDocumentation().description("E-Learning Management System"));
     }
 
-    /**
-     * Configures API metadata.
-     *
-     * @return API metadata
-     */
-    private ApiInfo apiInfoMetaData() {
-        return new ApiInfoBuilder()
-                .title("Tutorials")
-                .description("API Endpoint Decoration")
-                .contact(new Contact("Dev-Team", "https://www.dev-team.com/", "dev-team@gmail.com"))
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .version("1.0.0")
-                .build();
-    }
+
 }
