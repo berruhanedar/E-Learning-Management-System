@@ -16,7 +16,7 @@ import com.berru.app.elearningmanagementsystem.enums.ActiveStatus;
 import com.berru.app.elearningmanagementsystem.enums.UserRole;
 import com.berru.app.elearningmanagementsystem.exception.UserSaveFailedException;
 import com.berru.app.elearningmanagementsystem.service.*;
-import com.berru.app.elearningmanagementsystem.utils.JwtUtils;
+import com.berru.app.elearningmanagementsystem.utils.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtUtils jwtUtils;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private StorageService storageService;
@@ -262,7 +262,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
             return new ResponseEntity<UserLoginResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        jwtToken = jwtUtils.generateToken(loginRequest.getEmailId());
+        jwtToken = jwtTokenProvider.generateToken(loginRequest.getEmailId());
 
         if (!user.getStatus().equals(ActiveStatus.ACTIVE.value())) {
             response.setResponseMessage("User is not active");
