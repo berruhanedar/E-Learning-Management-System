@@ -1,4 +1,4 @@
-package com.berru.app.elearningmanagementsystem.config;
+package com.berru.app.elearningmanagementsystem.config.security;
 
 import com.berru.app.elearningmanagementsystem.entity.User;
 import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;

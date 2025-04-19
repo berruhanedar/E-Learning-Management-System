@@ -1,4 +1,4 @@
-package com.berru.app.elearningmanagementsystem.config;
+package com.berru.app.elearningmanagementsystem.config.web;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,5 @@
-package com.berru.app.elearningmanagementsystem.config.filter;
+package com.berru.app.elearningmanagementsystem.config.security;
 
-import com.berru.app.elearningmanagementsystem.config.CustomUserDetailsService;
 import com.berru.app.elearningmanagementsystem.utils.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.berru.app.elearningmanagementsystem.config;
+package com.berru.app.elearningmanagementsystem.config.web;
 
 import com.berru.app.elearningmanagementsystem.config.interceptor.HttpRequestLoggerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

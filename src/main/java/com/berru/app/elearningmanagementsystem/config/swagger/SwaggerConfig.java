@@ -1,4 +1,4 @@
-package com.berru.app.elearningmanagementsystem.config;
+package com.berru.app.elearningmanagementsystem.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
