@@ -12,16 +12,20 @@ import io.swagger.v3.oas.models.info.License;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI springShopOpenAPI() {
+    public OpenAPI customOpenAPI() {
+        Info apiInfo = new Info()
+                .title("LMS API")
+                .description("API documentation for the E-Learning Management System")
+                .version("1.0.0")
+                .license(new License()
+                        .name("Apache License 2.0")
+                        .url("https://www.apache.org/licenses/LICENSE-2.0"));
+
+        ExternalDocumentation externalDocs = new ExternalDocumentation()
+                .description("More information about the project");
+
         return new OpenAPI()
-                .info(new Info().title("Learning Management System Application")
-                        .description("Learning Management System Application ")
-                        .version("v0.0.1")
-                        .license(new License()
-                                .name("Apache 2.0")
-                                .url("http://springdoc.org")))
-                .externalDocs(new ExternalDocumentation().description("E-Learning Management System"));
+                .info(apiInfo)
+                .externalDocs(externalDocs);
     }
-
-
 }
