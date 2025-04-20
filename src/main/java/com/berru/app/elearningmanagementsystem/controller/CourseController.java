@@ -22,8 +22,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("course")
-@CrossOrigin(origins = "http://localhost:8085")
+@RequestMapping("api/course")
+@CrossOrigin(origins = "http://localhost:8080")
 public class CourseController {
 
     @Autowired
@@ -47,42 +47,42 @@ public class CourseController {
         return this.courseFacade.addCourseSectionTopic(request);
     }
 
-    @GetMapping("/course-id")
+    @GetMapping("/fetch/course-id")
     @Operation(summary = "Api to fetch course by using course id")
     public ResponseEntity<CourseResponseDto> fetchCourseById(@RequestParam("courseId") Integer courseId,
                                                              @RequestParam("videoShow") String videoShow) {
         return courseFacade.fetchCourseById(courseId, videoShow);
     }
 
-    @GetMapping("/course-user-id")
+    @GetMapping("/fetch/course-user-id")
     @Operation(summary = "Api to fetch course by using course id and student id")
     public ResponseEntity<CourseResponseDto> fetchCourseById(@RequestParam("courseId") Integer courseId,
                                                              @RequestParam("userId") Integer userId) {
         return courseFacade.fetchCourseByIdAndUserId(courseId, userId);
     }
 
-    @GetMapping("/status-wise")
+    @GetMapping("/fetch/status-wise")
     @Operation(summary = "Api to fetch courses by using status")
     public ResponseEntity<CourseResponseDto> fetchCoursesByStatus(@RequestParam("status") String status,
                                                                   @RequestParam("videoShow") String videoShow) {
         return courseFacade.fetchCoursesByStatus(status, videoShow);
     }
 
-    @GetMapping("/mentor-wise")
+    @GetMapping("/fetch/mentor-wise")
     @Operation(summary = "Api to fetch courses by using status")
     public ResponseEntity<CourseResponseDto> fetchCoursesByMentor(@RequestParam("mentorId") Integer mentorId,
                                                                   @RequestParam("status") String status, @RequestParam("videoShow") String videoShow) {
         return courseFacade.fetchCoursesByMentor(mentorId, status, videoShow);
     }
 
-    @GetMapping("/category-wise")
+    @GetMapping("/fetch/category-wise")
     @Operation(summary = "Api to fetch courses by using category")
     public ResponseEntity<CourseResponseDto> fetchCoursesByCategory(@RequestParam("categoryId") Integer categoryId,
                                                                     @RequestParam("videoShow") String videoShow) {
         return courseFacade.fetchCoursesByCategory(categoryId, videoShow);
     }
 
-    @GetMapping("/name-wise")
+    @GetMapping("/fetch/name-wise")
     @Operation(summary = "Api to fetch courses by using name")
     public ResponseEntity<CourseResponseDto> fetchCoursesByName(@RequestParam("courseName") String courseName) {
         return courseFacade.fetchCoursesByName(courseName);
@@ -118,5 +118,4 @@ public class CourseController {
     public ResponseEntity<MentorResponseDto> fetchMentorDashboardData(@RequestParam("mentorId") Integer mentorId) {
         return courseFacade.fetchMentorDashboardData(mentorId);
     }
-
 }

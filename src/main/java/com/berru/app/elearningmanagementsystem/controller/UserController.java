@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("user")
-@CrossOrigin(origins = "http://localhost:8085")
+@RequestMapping("api/user")
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
 
     @Autowired
@@ -53,7 +52,7 @@ public class UserController {
         return userFacade.login(userLoginRequest);
     }
 
-    @GetMapping("/role-wise")
+    @GetMapping("/fetch/role-wise")
     @Operation(summary = "Api to get Users By Role")
     public ResponseEntity<UserResponseDto> fetchAllUsersByRole(@RequestParam("role") String role)
             throws JsonProcessingException {
@@ -66,7 +65,7 @@ public class UserController {
         return userFacade.deleteMentor(mentorId);
     }
 
-    @GetMapping("/user-id")
+    @GetMapping("/fetch/user-id")
     @Operation(summary = "Api to get User Detail By User Id")
     public ResponseEntity<UserResponseDto> fetchUserById(@RequestParam("userId") int userId) {
         return userFacade.getUserById(userId);

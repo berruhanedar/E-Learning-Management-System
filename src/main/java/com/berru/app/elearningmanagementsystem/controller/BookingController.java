@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("course/booking")
-@CrossOrigin(origins = "http://localhost:8085")
+@RequestMapping("api/course/booking")
+@CrossOrigin(origins = "http://localhost:8080")
 public class BookingController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class BookingController {
         return this.bookingFacade.addBooking(request);
     }
 
-    @GetMapping("all")
+    @GetMapping("fetch/all")
     public ResponseEntity<BookingResponseDto> fetchAllBookings() {
         return this.bookingFacade.fetchAllBookings();
     }
@@ -38,13 +38,13 @@ public class BookingController {
         return this.bookingFacade.fetchAllBookingsByCourse(courseId);
     }
 
-    @GetMapping("customer-wise")
+    @GetMapping("fetch/course-wise")
     public ResponseEntity<BookingResponseDto> fetchAllBookingsByCustomer(
             @RequestParam("customerId") Integer customerId) {
         return this.bookingFacade.fetchAllBookingsByCustomer(customerId);
     }
 
-    @GetMapping("mentor-wise")
+    @GetMapping("fetch/mentor-wise")
     public ResponseEntity<BookingResponseDto> fetchAllBookingsByMentorId(
             @RequestParam("mentorId") Integer mentorId) {
         return this.bookingFacade.fetchAllBookingsByMentorId(mentorId);

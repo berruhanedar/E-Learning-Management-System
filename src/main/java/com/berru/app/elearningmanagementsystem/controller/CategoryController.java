@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("course/category")
-@CrossOrigin(origins = "http://localhost:8085")
+@RequestMapping("api/course/category")
+@CrossOrigin(origins = "http://localhost:8080")
 public class CategoryController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class CategoryController {
         return categoryFacade.updateCategory(category);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/fetch/all")
     @Operation(summary = "Api to fetch all category")
     public ResponseEntity<CategoryResponseDto> fetchAllCategory() {
         return categoryFacade.fetchAllCategory();
