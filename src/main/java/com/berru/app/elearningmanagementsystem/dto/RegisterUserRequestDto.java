@@ -30,17 +30,24 @@ public class RegisterUserRequestDto {
     private String phoneNo;
 
     @NotBlank(message = "Role cannot be blank")
-    private String role;
+    @Pattern(regexp = "^(admin|user|mentor)$", message = "Role must be one of the following: admin, user, mentor")
+    private String role; // Assuming predefined roles (admin, user, mentor)
 
+    @NotBlank(message = "Street cannot be blank")
+    @Size(min = 3, max = 100, message = "Street must be between 3 and 100 characters")
     private String street;
 
+    @NotBlank(message = "City cannot be blank")
+    @Size(min = 2, max = 50, message = "City must be between 2 and 50 characters")
     private String city;
 
+    @NotNull(message = "Postal code cannot be null")
+    @Pattern(regexp = "^[0-9]{5,6}$", message = "Postal code must be 5 or 6 digits")
     private int postalcode;
 
-    public static User toUserEntity(RegisterUserRequestDto registerUserRequestDto) {
-        User user = new User();
-        BeanUtils.copyProperties(registerUserRequestDto, user);
-        return user;
-    }
+//    public static User toUserEntity(RegisterUserRequestDto registerUserRequestDto) {
+//        User user = new User();
+//        BeanUtils.copyProperties(registerUserRequestDto, user);
+//        return user;
+//    }
 }

@@ -20,7 +20,7 @@ public class NewCourseRequestDto {
 
     private String description;
 
-    private String type; // free, paid
+    private String type;
 
     private BigDecimal fee;
 
@@ -36,10 +36,10 @@ public class NewCourseRequestDto {
 
     private MultipartFile thumbnail;
 
-    public static Course toEntity(NewCourseRequestDto dto) {
-        Course course = new Course();
-        BeanUtils.copyProperties(dto, course, "id", "mentorId", "categoryId", "notesFileName", "thumbnail");
-        return course;
-    }
+//    public static Course toEntity(NewCourseRequestDto dto) {
+//        Course course = new Course();
+//        BeanUtils.copyProperties(dto, course, "id", "mentorId", "categoryId", "notesFileName", "thumbnail");
+//        return course;
+//    }
 
 }
