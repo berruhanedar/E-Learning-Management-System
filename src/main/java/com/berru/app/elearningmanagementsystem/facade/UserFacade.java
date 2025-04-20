@@ -15,6 +15,8 @@ import com.berru.app.elearningmanagementsystem.entity.User;
 import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;
 import com.berru.app.elearningmanagementsystem.enums.role.UserRole;
 import com.berru.app.elearningmanagementsystem.exception.UserSaveFailedException;
+import com.berru.app.elearningmanagementsystem.mapper.MentorDetailMapper;
+import com.berru.app.elearningmanagementsystem.mapper.UserMapper;
 import com.berru.app.elearningmanagementsystem.service.*;
 import com.berru.app.elearningmanagementsystem.utils.JwtTokenProvider;
 import org.slf4j.Logger;
@@ -64,6 +66,12 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private MentorDetailMapper mentorDetailMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
     public ResponseEntity<CommonApiResponse> registerAdmin(RegisterUserRequestDto registerRequest) {
 
         LOG.info("Request received for Register Admin");
@@ -94,7 +102,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        User user = RegisterUserRequestDto.toUserEntity(registerRequest);
+        User user = userMapper.toEntity(registerRequest);
 
         user.setRole(UserRole.ROLE_ADMIN.value());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
@@ -146,7 +154,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        User user = RegisterUserRequestDto.toUserEntity(request);
+        User user = userMapper.toEntity(request);
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 
@@ -208,7 +216,8 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        MentorDetail mentorDetail = NewMentorDetailRequestDto.toEntity(request);
+        MentorDetail mentorDetail = mentorDetailMapper.toEntity(request); // MapStruct kullanıyorsan
+
 
         String profilePicName = this.storageService.store(request.getProfilePic());
 
@@ -271,7 +280,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
             return new ResponseEntity<UserLoginResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        UserDto userDto = UserDto.toUserDtoEntity(user);
+        UserDto userDto = userMapper.toDto(user); ;
 
         // user is authenticated
         if (jwtToken != null) {
@@ -313,7 +322,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
 
         for (User user : users) {
 
-            UserDto dto = UserDto.toUserDtoEntity(user);
+            UserDto dto = userMapper.toDto(user);
             userDtos.add(dto);
 
         }
@@ -350,7 +359,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
 
         for (User u : users) {
 
-            UserDto dto = UserDto.toUserDtoEntity(u);
+            UserDto dto = userMapper.toDto(u);
 
             userDtos.add(dto);
 
@@ -414,7 +423,5 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         response.setResponseMessage("Mentor and all it's Courses deleted successful!!!");
         response.setSuccess(true);
         return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
-
     }
-
 }
