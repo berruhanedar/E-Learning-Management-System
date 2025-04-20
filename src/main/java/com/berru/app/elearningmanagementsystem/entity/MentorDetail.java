@@ -20,7 +20,7 @@ public class MentorDetail {
 
     private int age;
 
-    private String highestQualification; // B Tech, B Pharm
+    private String highestQualification;
 
     private String profession;
 

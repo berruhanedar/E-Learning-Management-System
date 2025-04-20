@@ -16,7 +16,7 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "mentor_id")
-    private User mentor; // tour guide id
+    private User mentor;
 
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "category_id")
@@ -26,7 +26,7 @@ public class Course {
 
     private String description;
 
-    private String type; // free, paid
+    private String type;
 
     private BigDecimal fee;
 

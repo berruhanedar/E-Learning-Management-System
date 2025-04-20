@@ -25,8 +25,7 @@ public class Booking {
     @JoinColumn(name = "customer_id")
     private User customer;
 
-    private String status; // confirmed, cancelled
-
+    private String status;
     private BigDecimal amount;
 
     @OneToOne(cascade = CascadeType.ALL)
