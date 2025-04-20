@@ -4,6 +4,7 @@ import com.berru.app.elearningmanagementsystem.entity.Booking;
 import com.berru.app.elearningmanagementsystem.entity.Course;
 import com.berru.app.elearningmanagementsystem.entity.User;
 import com.berru.app.elearningmanagementsystem.repository.BookingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 @Service
 public class BookingServiceImpl implements BookingService {
+
+    @Autowired
     private BookingRepository bookingRepository;
 
     @Override
