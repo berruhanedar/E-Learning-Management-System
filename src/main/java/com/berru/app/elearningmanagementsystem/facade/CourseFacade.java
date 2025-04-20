@@ -14,6 +14,7 @@ import com.berru.app.elearningmanagementsystem.enums.role.UserRole;
 import com.berru.app.elearningmanagementsystem.enums.status.ActiveStatus;
 import com.berru.app.elearningmanagementsystem.enums.type.CourseTopicVideoShow;
 import com.berru.app.elearningmanagementsystem.enums.type.CourseType;
+import com.berru.app.elearningmanagementsystem.mapper.CourseMapper;
 import com.berru.app.elearningmanagementsystem.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
-
-
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,6 +53,9 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     public ResponseEntity<CourseResponseDto> addCourse(NewCourseRequestDto request) {
 
@@ -98,7 +100,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
         }
 
-        Course course = NewCourseRequestDto.toEntity(request);
+        Course course = courseMapper.toEntity(request);
 
         String courseNote = this.storageService.storeCourseNote(request.getNotesFileName());
         String thumbnailFilename = this.storageService.storeCourseNote(request.getThumbnail());
@@ -714,7 +716,5 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         response.setSuccess(true);
 
         return new ResponseEntity<MentorResponseDto>(response, HttpStatus.OK);
-
     }
-
 }
