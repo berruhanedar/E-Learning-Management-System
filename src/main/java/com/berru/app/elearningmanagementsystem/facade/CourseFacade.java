@@ -31,7 +31,8 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(CourseFacade.class);
+public class CourseFacade {
+    private final Logger LOG = LoggerFactory.getLogger(CourseFacade.class);
 
     @Autowired
     private CourseService courseService;
@@ -59,24 +60,24 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> addCourse(NewCourseRequestDto request) {
 
-        LOG.info("received request for adding the mentor course");
+        LOG.info("Received request for adding the mentor course");
 
-        CourseResponseDto response = new CourseResponseDto();
+        CourseResponseDto apiResponse = new CourseResponseDto();
 
         if (request == null) {
-            response.setResponseMessage("missing request body");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Missing request body");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         if (request.getCategoryId() == 0 || request.getDescription() == null || request.getMentorId() == 0
                 || request.getName() == null || request.getNotesFileName() == null || request.getType() == null
                 || request.getThumbnail() == null) {
-            response.setResponseMessage("missing input");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Missing input");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         String addedDateTime = String
@@ -85,19 +86,19 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         Category category = this.categoryService.getCategoryById(request.getCategoryId());
 
         if (category == null) {
-            response.setResponseMessage("category not found");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Category not found");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         User mentor = this.userService.getUserById(request.getMentorId());
 
         if (mentor == null) {
-            response.setResponseMessage("mentor not found");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Mentor not found");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         Course course = courseMapper.toEntity(request);
@@ -115,48 +116,48 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         Course savedCourse = this.courseService.add(course);
 
         if (savedCourse == null) {
-            response.setResponseMessage("Failed to add the course");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Failed to add the course");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            response.setCourse(savedCourse);
-            response.setResponseMessage("Course Created Successful, Add Course Section now....");
-            response.setSuccess(true);
+            apiResponse.setCourse(savedCourse);
+            apiResponse.setResponseMessage("Course Created Successful, Add Course Section now....");
+            apiResponse.setSuccess(true);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.OK);
         }
 
     }
 
     public ResponseEntity<CourseResponseDto> addCourseSection(NewCourseSectionRequestDto request) {
 
-        LOG.info("received request for adding the course section");
+        LOG.info("Received request to add course");
 
-        CourseResponseDto response = new CourseResponseDto();
+        CourseResponseDto apiResponse = new CourseResponseDto();
 
         if (request == null) {
-            response.setResponseMessage("missing request body");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Missing request body");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         if (request.getCourseId() == 0 || request.getName() == null || request.getDescription() == null
                 || request.getSrNo() == null) {
-            response.setResponseMessage("missing input");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Missing input");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         Course course = this.courseService.getById(request.getCourseId());
 
         if (course == null) {
-            response.setResponseMessage("course not found!!!");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Course not found!!!");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         CourseSection section = new CourseSection();
@@ -169,32 +170,32 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         CourseSection savedSection = this.courseSectionService.add(section);
 
         if (savedSection == null) {
-            response.setCourse(course);
-            response.setResponseMessage("Failed to add the course section");
-            response.setSuccess(false);
+            apiResponse.setCourse(course);
+            apiResponse.setResponseMessage("Failed to add the course section");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
 
             Course updatedCourse = this.courseService.getById(request.getCourseId());
 
-            response.setCourse(updatedCourse);
-            response.setResponseMessage("Course Section Added successful!!!");
-            response.setSuccess(true);
+            apiResponse.setCourse(updatedCourse);
+            apiResponse.setResponseMessage("Course section added successful!!!");
+            apiResponse.setSuccess(true);
 
-            return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
+            return new ResponseEntity<CourseResponseDto>(apiResponse, HttpStatus.OK);
         }
 
     }
 
     public ResponseEntity<CourseResponseDto> addCourseSectionTopic(NewCourseSectionTopicRequest request) {
 
-        LOG.info("received request for adding the course section");
+        LOG.info("Received request to add course section topic");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (request == null) {
-            response.setResponseMessage("missing request body");
+            response.setResponseMessage("Request body is missing");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -202,7 +203,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
         if (request.getSectionId() == 0 || request.getName() == null || request.getDescription() == null
                 || request.getSrNo() == null || request.getVideo() == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Missing input fields");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -211,7 +212,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         CourseSection section = this.courseSectionService.getById(request.getSectionId());
 
         if (section == null) {
-            response.setResponseMessage("Course Section not found!!!");
+            response.setResponseMessage("Course section not found");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -239,7 +240,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             response.setCourse(updatedCourse);
-            response.setResponseMessage("Course Section Topic Added successful!!!");
+            response.setResponseMessage("Course section topic added successful!!!");
             response.setSuccess(true);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -249,12 +250,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> fetchCourseById(Integer courseId, String toShowVideo) {
 
-        LOG.info("received request for fetching the course by using id");
+        LOG.info("Course retrieval request received using course ID");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (courseId == null || courseId == 0) {
-            response.setResponseMessage("missing course id");
+            response.setResponseMessage("Course ID is missing");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -263,7 +264,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         Course course = this.courseService.getById(courseId);
 
         if (course == null) {
-            response.setResponseMessage("course not found!!!");
+            response.setResponseMessage("Course not found");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -292,7 +293,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         }
 
         response.setCourse(course);
-        response.setResponseMessage("Course Fetched Successful!!!");
+        response.setResponseMessage("Course successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -301,12 +302,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> fetchCoursesByStatus(String status, String videoShow) {
 
-        LOG.info("received request for fetching the courses by status");
+        LOG.info("Request received to fetch courses based on status");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (status == null || videoShow == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Required input is missing");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -315,7 +316,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         List<Course> courses = this.courseService.getByStatus(status);
 
         if (CollectionUtils.isEmpty(courses)) {
-            response.setResponseMessage("Courses not found!!!");
+            response.setResponseMessage("No courses found");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -347,7 +348,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         }
 
         response.setCourses(courses);
-        response.setResponseMessage("Courses Fetched Successful!!!");
+        response.setResponseMessage("Courses successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -356,12 +357,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> fetchCoursesByMentor(Integer mentorId, String status, String videoShow) {
 
-        LOG.info("received request for fetching the courses by mentor and status");
+        LOG.info("Request received to fetch courses by mentor and status");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (mentorId == null || mentorId == 0 || status == null || videoShow == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Missing input");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -370,7 +371,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         User mentor = this.userService.getUserById(mentorId);
 
         if (mentor == null || !mentor.getRole().equals(UserRole.ROLE_MENTOR.value())) {
-            response.setResponseMessage("mentor not found");
+            response.setResponseMessage("Mentor not found");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -411,7 +412,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         }
 
         response.setCourses(courses);
-        response.setResponseMessage("Courses Fetched Successful!!!");
+        response.setResponseMessage("Courses successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -420,12 +421,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> fetchCoursesByCategory(Integer categoryId, String videoShow) {
 
-        LOG.info("received request for fetching the courses by mentor and status");
+        LOG.info("Request received to fetch courses by category");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (categoryId == null || categoryId == 0 || videoShow == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Missing input");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -434,7 +435,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         Category category = this.categoryService.getCategoryById(categoryId);
 
         if (category == null) {
-            response.setResponseMessage("category not found");
+            response.setResponseMessage("Category not found");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -475,7 +476,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         }
 
         response.setCourses(courses);
-        response.setResponseMessage("Courses Fetched Successful!!!");
+        response.setResponseMessage("Courses successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -484,12 +485,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> fetchCoursesByName(String courseName) {
 
-        LOG.info("received request for fetching the courses by mentor and status");
+        LOG.info("Request received to fetch courses by course name");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (courseName == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Missing input");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -526,7 +527,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         }
 
         response.setCourses(courses);
-        response.setResponseMessage("Courses Fetched Successful!!!");
+        response.setResponseMessage("Courses successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -554,7 +555,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
                 out.flush();
             } catch (IOException e) {
 
-                LOG.info("Video Player closed or any netwrok issue!!!");
+                LOG.info("The video player was closed or there was a network issue");
 
                 e.printStackTrace();
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -567,12 +568,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CourseResponseDto> fetchCourseByIdAndUserId(Integer courseId, Integer userId) {
 
-        LOG.info("received request for fetching the course by id and used id");
+        LOG.info("Request received to fetch the course by course id and user id");
 
         CourseResponseDto response = new CourseResponseDto();
 
         if (courseId == null || courseId == 0) {
-            response.setResponseMessage("missing course id");
+            response.setResponseMessage("Course ID is missing");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -581,7 +582,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         Course course = this.courseService.getById(courseId);
 
         if (course == null) {
-            response.setResponseMessage("course not found!!!");
+            response.setResponseMessage("Course not found");
             response.setSuccess(false);
 
             return new ResponseEntity<CourseResponseDto>(response, HttpStatus.BAD_REQUEST);
@@ -627,7 +628,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         }
 
         response.setCourse(course);
-        response.setResponseMessage("Course Fetched Successful!!!");
+        response.setResponseMessage("Course successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<CourseResponseDto>(response, HttpStatus.OK);
@@ -636,12 +637,12 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
     public ResponseEntity<CommonApiResponse> deleteCourse(Integer courseId) {
 
-        LOG.info("received request for fetching the course by using id");
+        LOG.info("Request received to delete the course by using course id");
 
         CommonApiResponse response = new CommonApiResponse();
 
         if (courseId == null || courseId == 0) {
-            response.setResponseMessage("missing course id");
+            response.setResponseMessage("Course ID is missing");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -650,7 +651,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         Course course = this.courseService.getById(courseId);
 
         if (course == null) {
-            response.setResponseMessage("course not found!!!");
+            response.setResponseMessage("Course not found");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -659,7 +660,7 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
         course.setStatus(ActiveStatus.DEACTIVATED.value());
         this.courseService.update(course);
 
-        response.setResponseMessage("Course Deleted Successful!!!");
+        response.setResponseMessage("Course successfully deleted");
         response.setSuccess(true);
 
         return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
@@ -670,35 +671,31 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
         Resource resource = storageService.loadCourseNote(notesFileName);
         if (resource == null) {
-            // Handle file not found
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Course_Notes\"")
                 .body(resource);
-
     }
 
     public ResponseEntity<MentorResponseDto> fetchMentorDashboardData(Integer mentorId) {
 
-        LOG.info("received request for fetching the mentor dashboard data");
+        LOG.info("Request received to fetch mentor dashboard data");
 
         MentorResponseDto response = new MentorResponseDto();
 
         if (mentorId == null || mentorId == 0) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Mentor ID is missing");
             response.setSuccess(false);
-
-            return new ResponseEntity<MentorResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         User mentor = this.userService.getUserById(mentorId);
 
         if (mentor == null || !mentor.getRole().equals(UserRole.ROLE_MENTOR.value())) {
-            response.setResponseMessage("mentor not found");
+            response.setResponseMessage("Mentor not found");
             response.setSuccess(false);
-
-            return new ResponseEntity<MentorResponseDto>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         Long totalActiveCourse = courseService.getCountByMentorAndStatus(mentor, ActiveStatus.ACTIVE.value());
@@ -706,15 +703,15 @@ public class CourseFacade {private final Logger LOG = LoggerFactory.getLogger(Co
 
         List<Booking> bookings = this.bookingService.getByMentor(mentor);
 
-        response.setBookings(!CollectionUtils.isEmpty(bookings) ? bookings : new ArrayList<>());
-        response.setTotalCoursePurchases(!CollectionUtils.isEmpty(bookings) ? bookings.size() : 0);
+        response.setBookings(CollectionUtils.isEmpty(bookings) ? new ArrayList<>() : bookings);
+        response.setTotalCoursePurchases(CollectionUtils.isEmpty(bookings) ? 0 : bookings.size());
 
         response.setTotalActiveCourse(totalActiveCourse != null ? totalActiveCourse : 0);
         response.setTotalDeletedCourse(totalDeactivatedCourse != null ? totalDeactivatedCourse : 0);
         response.setTotalPurchaseAmount(mentor.getAmount());
-        response.setResponseMessage("Dashboard Data Fetched Successful!!!");
+        response.setResponseMessage("Mentor dashboard data fetched successfully");
         response.setSuccess(true);
 
-        return new ResponseEntity<MentorResponseDto>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

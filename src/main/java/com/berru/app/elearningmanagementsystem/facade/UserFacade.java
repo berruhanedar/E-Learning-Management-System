@@ -74,19 +74,19 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
 
     public ResponseEntity<CommonApiResponse> registerAdmin(RegisterUserRequestDto registerRequest) {
 
-        LOG.info("Request received for Register Admin");
+        LOG.info("Request received to register a new admin");
 
         CommonApiResponse response = new CommonApiResponse();
 
         if (registerRequest == null) {
-            response.setResponseMessage("user is null");
+            response.setResponseMessage("Register request cannot be null");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
         if (registerRequest.getEmailId() == null || registerRequest.getPassword() == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Email and password are required");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -96,7 +96,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
                 ActiveStatus.ACTIVE.value());
 
         if (existingUser != null) {
-            response.setResponseMessage("User already register with this Email");
+            response.setResponseMessage("A user is already registered with this email");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -111,28 +111,28 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         existingUser = this.userService.addUser(user);
 
         if (existingUser == null) {
-            response.setResponseMessage("failed to register admin");
+            response.setResponseMessage("Admin registration failed");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
-        response.setResponseMessage("Admin registered Successfully");
+        response.setResponseMessage("Admin registered successfully");
         response.setSuccess(true);
 
-        LOG.info("Response Sent!!!");
+        LOG.info("Admin registration successful, response sent");
 
         return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
     }
 
     public ResponseEntity<CommonApiResponse> registerUser(RegisterUserRequestDto request) {
 
-        LOG.info("Received request for register user");
+        LOG.info("Received request to register a new user");
 
         CommonApiResponse response = new CommonApiResponse();
 
         if (request == null) {
-            response.setResponseMessage("user is null");
+            response.setResponseMessage("Register request cannot be null");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -141,14 +141,14 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         User existingUser = this.userService.getUserByEmailAndStatus(request.getEmailId(), ActiveStatus.ACTIVE.value());
 
         if (existingUser != null) {
-            response.setResponseMessage("User with this Email Id already resgistered!!!");
+            response.setResponseMessage("A user with this email is already registered.");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
         }
 
         if (request.getRole() == null) {
-            response.setResponseMessage("bad request ,Role is missing");
+            response.setResponseMessage("User role must be provided.");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -170,17 +170,17 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         Address savedAddress = this.addressService.addAddress(address);
 
         if (savedAddress == null) {
-            throw new UserSaveFailedException("Registration Failed because of Technical issue:(");
+            throw new UserSaveFailedException("Registration failed due to a system error while saving the address.");
         }
 
         user.setAddress(savedAddress);
         existingUser = this.userService.addUser(user);
 
         if (existingUser == null) {
-            throw new UserSaveFailedException("Registration Failed because of Technical issue:(");
+            throw new UserSaveFailedException("Registration failed due to a system error while saving the user.");
         }
 
-        response.setResponseMessage("User registered Successfully");
+        response.setResponseMessage("User registered successfully.");
         response.setSuccess(true);
 
         return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
@@ -193,7 +193,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         CommonApiResponse response = new CommonApiResponse();
 
         if (request == null) {
-            response.setResponseMessage("missing request body");
+            response.setResponseMessage("Request body is missing.");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -201,7 +201,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
 
         if (request.getAge() == 0 || request.getBio() == null || request.getHighestQualification() == null
                 || request.getMentorId() == 0 || request.getProfession() == null || request.getProfilePic() == null) {
-            response.setResponseMessage("missing input");
+            response.setResponseMessage("Missing input");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -210,7 +210,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         User mentor = this.userService.getUserById(request.getMentorId());
 
         if (mentor == null || !mentor.getRole().equals(UserRole.ROLE_MENTOR.value())) {
-            response.setResponseMessage("mentor not found!!!");
+            response.setResponseMessage("Mentor not found!!!");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
@@ -229,7 +229,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
 
         this.userService.updateUser(mentor);
 
-        response.setResponseMessage("Mentor Profile Updated Successful!!!");
+        response.setResponseMessage("Mentor profile updated successfully.");
         response.setSuccess(true);
 
         return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
@@ -242,7 +242,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         UserLoginResponse response = new UserLoginResponse();
 
         if (loginRequest == null) {
-            response.setResponseMessage("Missing Input");
+            response.setResponseMessage("Missing input");
             response.setSuccess(false);
 
             return new ResponseEntity<UserLoginResponse>(response, HttpStatus.BAD_REQUEST);
@@ -254,7 +254,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         user = this.userService.getUserByEmailid(loginRequest.getEmailId());
 
         if (user == null) {
-            response.setResponseMessage("User with this Email Id not registered in System!!!");
+            response.setResponseMessage("No user found with the provided email address.");
             response.setSuccess(false);
 
             return new ResponseEntity<UserLoginResponse>(response, HttpStatus.BAD_REQUEST);
@@ -274,7 +274,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         jwtToken = jwtTokenProvider.generateToken(loginRequest.getEmailId());
 
         if (!user.getStatus().equals(ActiveStatus.ACTIVE.value())) {
-            response.setResponseMessage("User is not active");
+            response.setResponseMessage("User account is inactive.");
             response.setSuccess(false);
 
             return new ResponseEntity<UserLoginResponse>(response, HttpStatus.BAD_REQUEST);
@@ -285,7 +285,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         // user is authenticated
         if (jwtToken != null) {
             response.setUser(userDto);
-            response.setResponseMessage("Logged in sucessful");
+            response.setResponseMessage("Login successful.");
             response.setSuccess(true);
             response.setJwtToken(jwtToken);
             return new ResponseEntity<UserLoginResponse>(response, HttpStatus.OK);
@@ -304,7 +304,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         UserResponseDto response = new UserResponseDto();
 
         if (role == null) {
-            response.setResponseMessage("missing role");
+            response.setResponseMessage("Missing role");
             response.setSuccess(false);
             return new ResponseEntity<UserResponseDto>(response, HttpStatus.BAD_REQUEST);
         }
@@ -328,7 +328,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         }
 
         response.setUsers(userDtos);
-        response.setResponseMessage("User Fetched Successfully");
+        response.setResponseMessage("User successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<UserResponseDto>(response, HttpStatus.OK);
@@ -366,7 +366,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         }
 
         response.setUsers(userDtos);
-        response.setResponseMessage("User Fetched Successfully");
+        response.setResponseMessage("User successfully fetched");
         response.setSuccess(true);
 
         return new ResponseEntity<UserResponseDto>(response, HttpStatus.OK);
@@ -391,7 +391,7 @@ public class UserFacade {private final Logger LOG = LoggerFactory.getLogger(User
         CommonApiResponse response = new CommonApiResponse();
 
         if (mentorId == null) {
-            response.setResponseMessage("bad request, missing data");
+            response.setResponseMessage("Bad request, Missing data");
             response.setSuccess(false);
 
             return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);

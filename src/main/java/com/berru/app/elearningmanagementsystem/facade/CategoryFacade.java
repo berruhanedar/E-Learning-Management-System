@@ -32,16 +32,15 @@ public class CategoryFacade {
     private CourseService courseService;
 
     public ResponseEntity<CommonApiResponse> addCategory(Category category) {
+        LOG.info("Request received for adding category");
 
-        LOG.info("Request received for add category");
-
-        CommonApiResponse response = new CommonApiResponse();
+        CommonApiResponse commonApiResponse = new CommonApiResponse();
 
         if (category == null) {
-            response.setResponseMessage("missing input");
-            response.setSuccess(false);
+            commonApiResponse.setResponseMessage("Input is missing");
+            commonApiResponse.setSuccess(false);
 
-            return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CommonApiResponse>(commonApiResponse, HttpStatus.BAD_REQUEST);
         }
 
         category.setStatus(ActiveStatus.ACTIVE.value());
@@ -49,94 +48,95 @@ public class CategoryFacade {
         Category savedCategory = this.categoryService.addCategory(category);
 
         if (savedCategory == null) {
-            throw new CategorySaveFailedException("Failed to add category");
+            throw new CategorySaveFailedException("Category could not be added");
         }
 
-        response.setResponseMessage("Category Added Successful");
-        response.setSuccess(true);
+        commonApiResponse.setResponseMessage("Category added successfully");
+        commonApiResponse.setSuccess(true);
 
-        return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<CommonApiResponse>(commonApiResponse, HttpStatus.OK);
 
     }
 
     public ResponseEntity<CommonApiResponse> updateCategory(Category category) {
 
-        LOG.info("Request received for add category");
 
-        CommonApiResponse response = new CommonApiResponse();
+        LOG.info("Received request to update category");
+
+        CommonApiResponse apiResponse = new CommonApiResponse();
 
         if (category == null) {
-            response.setResponseMessage("missing input");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Input is missing");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CommonApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         if (category.getId() == 0) {
-            response.setResponseMessage("missing category Id");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Category ID is missing");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CommonApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         category.setStatus(ActiveStatus.ACTIVE.value());
         Category savedCategory = this.categoryService.updateCategory(category);
 
         if (savedCategory == null) {
-            throw new CategorySaveFailedException("Failed to update category");
+            throw new CategorySaveFailedException("Failed to update the category");
         }
 
-        response.setResponseMessage("Category Updated Successful");
-        response.setSuccess(true);
+        apiResponse.setResponseMessage("Category updated successfully");
+        apiResponse.setSuccess(true);
 
-        return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<CommonApiResponse>(apiResponse, HttpStatus.OK);
 
     }
 
     public ResponseEntity<CategoryResponseDto> fetchAllCategory() {
 
-        LOG.info("Request received for fetching all categories");
+        LOG.info("Processing request to fetch all categories");
 
-        CategoryResponseDto response = new CategoryResponseDto();
+        CategoryResponseDto apiResponse = new CategoryResponseDto();
 
         List<Category> categories = new ArrayList<>();
 
         categories = this.categoryService.getCategoriesByStatusIn(Arrays.asList(ActiveStatus.ACTIVE.value()));
 
         if (CollectionUtils.isEmpty(categories)) {
-            response.setResponseMessage("No Categories found");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("No categories found");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CategoryResponseDto>(response, HttpStatus.OK);
+            return new ResponseEntity<CategoryResponseDto>(apiResponse, HttpStatus.OK);
         }
 
-        response.setCategories(categories);
-        response.setResponseMessage("Category fetched successful");
-        response.setSuccess(true);
+        apiResponse.setCategories(categories);
+        apiResponse.setResponseMessage("Categories fetched successfully");
+        apiResponse.setSuccess(true);
 
-        return new ResponseEntity<CategoryResponseDto>(response, HttpStatus.OK);
+        return new ResponseEntity<CategoryResponseDto>(apiResponse, HttpStatus.OK);
     }
 
     public ResponseEntity<CommonApiResponse> deleteCategory(int categoryId) {
 
-        LOG.info("Request received for deleting category");
+        LOG.info("Processing request to delete category");
 
-        CommonApiResponse response = new CommonApiResponse();
+        CommonApiResponse apiResponse = new CommonApiResponse();
 
         if (categoryId == 0) {
-            response.setResponseMessage("missing category Id");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Category ID is missing");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CommonApiResponse>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CommonApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
         Category category = this.categoryService.getCategoryById(categoryId);
 
         if (category == null) {
-            response.setResponseMessage("category not found");
-            response.setSuccess(false);
+            apiResponse.setResponseMessage("Category not found");
+            apiResponse.setSuccess(false);
 
-            return new ResponseEntity<CommonApiResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<CommonApiResponse>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         List<Course> courses = this.courseService.getByCategoryAndStatus(category, ActiveStatus.ACTIVE.value());
@@ -145,7 +145,7 @@ public class CategoryFacade {
         Category updatedCategory = this.categoryService.updateCategory(category);
 
         if (updatedCategory == null) {
-            throw new CategorySaveFailedException("Failed to delete the Category");
+            throw new CategorySaveFailedException("Failed to delete category");
         }
 
         if (!CollectionUtils.isEmpty(courses)) {
@@ -157,15 +157,14 @@ public class CategoryFacade {
             List<Course> updatedCourses = this.courseService.updateAll(courses);
 
             if (CollectionUtils.isEmpty(updatedCourses)) {
-                throw new CategorySaveFailedException("Failed to delete the Course Category!!!");
+                throw new CategorySaveFailedException("Failed to deactivate courses under the category");
             }
-
         }
 
-        response.setResponseMessage("Course Category & all its Courses Deleted Successful");
-        response.setSuccess(true);
+        apiResponse.setResponseMessage("Category and its courses were successfully deleted");
+        apiResponse.setSuccess(true);
 
-        return new ResponseEntity<CommonApiResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<CommonApiResponse>(apiResponse, HttpStatus.OK);
 
     }
 
