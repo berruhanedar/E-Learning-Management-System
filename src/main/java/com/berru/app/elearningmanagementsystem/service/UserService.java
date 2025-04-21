@@ -1,25 +1,61 @@
 package com.berru.app.elearningmanagementsystem.service;
 
+
 import java.util.List;
+import java.util.Optional;
 
 import com.berru.app.elearningmanagementsystem.entity.User;
+import com.berru.app.elearningmanagementsystem.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface UserService {
-    User addUser(User user);
+@Service
+public class UserService {
 
-    User updateUser(User user);
+    @Autowired
+    private UserRepository UserRepository;
 
-    User getUserByEmailAndStatus(String emailId, String status);
+    public User addUser(User user) {
+        return UserRepository.save(user);
+    }
 
-    User getUserByEmailid(String emailId);
+    public User updateUser(User user) {
+        return UserRepository.save(user);
+    }
 
-    List<User> getUserByRole(String role);
+    public User getUserByEmailAndStatus(String emailId, String status) {
+        return UserRepository.findByEmailIdAndStatus(emailId, status);
+    }
 
-    User getUserById(int userId);
+    public User getUserByEmailid(String emailId) {
+        return UserRepository.findByEmailId(emailId);
+    }
 
-    User getUserByEmailIdAndRoleAndStatus(String emailId, String role, String status);
+    public List<User> getUserByRole(String role) {
+        return UserRepository.findByRole(role);
+    }
 
-    List<User> updateAllUser(List<User> users);
+    public User getUserById(int userId) {
 
-    List<User> getUserByRoleAndStatus(String role, String status);
+        Optional<User> optionalUser = this.UserRepository.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            return null;
+        }
+
+    }
+
+    public User getUserByEmailIdAndRoleAndStatus(String emailId, String role, String status) {
+        return this.UserRepository.findByEmailIdAndRoleAndStatus(emailId, role, status);
+    }
+
+    public List<User> updateAllUser(List<User> users) {
+        return this.UserRepository.saveAll(users);
+    }
+
+    public List<User> getUserByRoleAndStatus(String role, String status) {
+        return this.UserRepository.findByRoleAndStatus(role, status);
+    }
 }
