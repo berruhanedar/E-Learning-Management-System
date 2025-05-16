@@ -18,7 +18,7 @@ public class WebConfig {
 
     private static final long MAX_AGE_SECONDS = 3600;
     private static final int FILTER_ORDER = -102;
-    private static final String LOCALHOST_ORIGIN = "http://localhost:8081";
+    private static final String LOCALHOST_ORIGIN = "http://localhost:3000";
 
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilterRegistration() {
