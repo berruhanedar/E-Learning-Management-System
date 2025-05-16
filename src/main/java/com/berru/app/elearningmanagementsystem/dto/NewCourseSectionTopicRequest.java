@@ -11,7 +11,6 @@ public class NewCourseSectionTopicRequest {
     private int sectionId;
 
     @NotNull(message = "Serial number cannot be null")
-    @Pattern(regexp = "[A-Za-z0-9]{3,}", message = "Serial number must be alphanumeric and at least 3 characters long")
     private String srNo;
 
     @NotNull(message = "Name cannot be null")

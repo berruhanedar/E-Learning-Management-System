@@ -38,20 +38,18 @@ public class ApplicationSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/user/login",
-                                "/api/user/register"
-                        ).permitAll()
-                        .anyRequest().authenticated() // Diğer her şey için auth gerekiyor
+                        .anyRequest().permitAll()  // TÜM İSTEKLERİ HERKESE AÇIK YAP
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        // JWT filtresini kaldırabilirsin ya da yorum satırı yapabilirsin
+        // http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder encoder() {
