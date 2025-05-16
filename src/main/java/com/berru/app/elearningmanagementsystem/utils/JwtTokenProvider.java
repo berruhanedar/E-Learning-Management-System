@@ -19,7 +19,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtTokenProvider {
 
-    private static final String SECRET_KEY = "rK9p!Vw3mT@zE7qL0XyB#s8FgN6d^H1uCjA*5ZMtWrYvP2oJ4nQ";
+    private static final String SECRET_KEY = "w4t9VNzQOE8/ZUvF3MH2xqThF1U87KCebxBFDZ3KwzYw=";
 
     private static final long EXPIRATION_TIME_MS = 1000 * 60 * 30;
 

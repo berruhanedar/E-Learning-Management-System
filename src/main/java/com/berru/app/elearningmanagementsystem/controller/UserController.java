@@ -2,6 +2,7 @@ package com.berru.app.elearningmanagementsystem.controller;
 
 import com.berru.app.elearningmanagementsystem.dto.*;
 import com.berru.app.elearningmanagementsystem.facade.UserFacade;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -48,7 +49,7 @@ public class UserController {
 
     @PostMapping("login")
     @Operation(summary = "Api to login any User")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
+    public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
         return userFacade.login(userLoginRequest);
     }
 

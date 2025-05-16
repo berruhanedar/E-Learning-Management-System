@@ -34,20 +34,15 @@ public class ApplicationSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
-                        .disable())
+
+        http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
-                .headers(headers -> headers
-                        .frameOptions(frameOptions -> frameOptions.disable())
-                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/user/login",
-                                "/api/user/register",
-                                "/h2-console/**"
+                                "/api/user/register"
                         ).permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated() // Diğer her şey için auth gerekiyor
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -57,31 +52,6 @@ public class ApplicationSecurityConfig {
 
         return http.build();
     }
-
-    // postgres
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//
-//        http.csrf(csrf -> csrf.disable())
-//                .cors(cors -> cors.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(
-//                                "/api/user/login",
-//                                "/api/user/register"
-//                        ).permitAll()
-//                        .anyRequest().authenticated() // Diğer her şey için auth gerekiyor
-//                )
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                );
-//
-//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
-
-
-
 
     @Bean
     public PasswordEncoder encoder() {
