@@ -66,6 +66,8 @@
         </jacoco.exclude.default>
         <jacoco.excludes>src/test/**</jacoco.excludes>
         <jacoco.exclude.list>${jacoco.exclude.default},${jacoco.excludes}</jacoco.exclude.list>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
     </properties>
 
     <dependencies>
