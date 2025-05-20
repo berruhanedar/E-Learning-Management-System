@@ -6,4 +6,4 @@
 ## HOME PAGE
 ![HOME PAGE](https://github.com/user-attachments/assets/1e568a28-145a-449e-b81a-3aefa75f69ef)
 
-[USER MANUAL - BERRU HANEDAR 200706028.pdf](https://github.com/user-attachments/files/20320927/USER.MANUAL.-.BERRU.HANEDAR.200706028.pdf)
+![POSTER-BERRU HANEDAR 200706028](https://github.com/user-attachments/assets/cf776c81-bb7f-436a-af33-022b745d63e7)
